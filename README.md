@@ -77,7 +77,6 @@ ChatSphere/
 - `GET /api/users` - Get all users
 - `GET /api/messages/:id` - Get messages
 - `POST /api/messages/send/:id` - Send message
-```
 
 ## 🤝 Contributing
 1. Fork the repo
@@ -85,8 +84,6 @@ ChatSphere/
 3. Commit changes (`git commit -m 'Add feature'`)
 4. Push to branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
-```
-
 
 ---
 Built with ❤️ | [Live App](https://chatsphere-jgjo.onrender.com/)
