@@ -1,6 +1,7 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
 import { getDicebearAvatarSvg } from "../../utils/avatar";
+import { useMemo } from "react";
 
 const Conversation = ({conversation,lastIdx,emoji}) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
@@ -8,7 +9,10 @@ const Conversation = ({conversation,lastIdx,emoji}) => {
     const isSelected = selectedConversation?._id === conversation._id;
     const {onlineUsers} = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
-    const avatarSrc = conversation.profilePicture || getDicebearAvatarSvg(conversation.fullName || conversation.username);
+    const avatarSrc = useMemo(() => 
+        conversation.profilePicture || getDicebearAvatarSvg(conversation.fullName || conversation.username, 48),
+        [conversation.profilePicture, conversation.fullName, conversation.username]
+    );
 
     return (
         <>

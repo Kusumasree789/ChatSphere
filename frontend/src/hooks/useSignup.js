@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { useAuthContext } from '../context/AuthContext';
+import { getDicebearAvatarSvg } from '../utils/avatar';
 
 const useSignup = () => {
   const [loading, setLoading] = React.useState(false);
@@ -25,10 +26,16 @@ const useSignup = () => {
             throw new Error(data.error);
         }
         
+        // Generate avatar locally for new user
+        const authUser = {
+            ...data,
+            profilePicture: getDicebearAvatarSvg(data.fullName || data.username || "User", 48),
+        };
+        
         // localstorage
-        localStorage.setItem("ChatSphere-user",JSON.stringify(data))
+        localStorage.setItem("ChatSphere-user",JSON.stringify(authUser))
         // context
-        setAuthUser(data);
+        setAuthUser(authUser);
 
     } catch (error) {
         toast.error(error.message);

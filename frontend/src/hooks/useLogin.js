@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useAuthContext } from '../context/AuthContext';
+import { getDicebearAvatarSvg } from '../utils/avatar';
 
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ const useLogin = () => {
         }
         const authUser = {
             ...data,
-            profilePicture: data.profilePicture || `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(data.fullName || data.username || "User")}&size=64`,
+            profilePicture: getDicebearAvatarSvg(data.fullName || data.username || "User", 48),
         };
         localStorage.setItem("ChatSphere-user", JSON.stringify(authUser));
         setAuthUser(authUser);

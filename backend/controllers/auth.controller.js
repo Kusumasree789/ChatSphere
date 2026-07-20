@@ -19,15 +19,11 @@ export const signup = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
 
-      const nameSource = (fullName || username || "User").trim();
-      const profilePicture = `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(nameSource)}&size=64`;
-
       const newUser = new User({
         fullName,
         username,
         password: hashedPassword,
         gender,
-        profilePicture,
       });
 
       if (newUser) {
@@ -39,7 +35,6 @@ export const signup = async (req, res) => {
             _id: newUser._id,
             fullName: newUser.fullName,
             username: newUser.username,
-            profilePicture: newUser.profilePicture,
         });
       } else {
         res.status(400).json({ error: "Invalid user data" });
@@ -63,13 +58,10 @@ export const login = async (req, res) => {
 
       generateTokenAndSetCookie(user._id, res);
 
-      const profilePicture = user.profilePicture || `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(user.fullName || user.username || "User")}&size=64`;
-
       res.status(200).json({
         _id: user._id,
         fullName: user.fullName,
         username: user.username,
-        profilePicture,
       });
 
     } catch (error) {

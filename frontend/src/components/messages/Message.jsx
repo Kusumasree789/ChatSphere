@@ -2,6 +2,7 @@ import { useAuthContext } from "../../context/AuthContext";
 import { extractTime } from "../../utils/extractTime";
 import useConversation from "../../zustand/useConversation";
 import { getDicebearAvatarSvg } from "../../utils/avatar";
+import { useMemo } from "react";
 
 const Message = ({message}) => {
     const {authUser} = useAuthContext();
@@ -11,7 +12,10 @@ const Message = ({message}) => {
     const chatClassName = fromMe ? 'chat-end' : 'chat-start';
     const profilePicture = fromMe ? authUser.profilePicture : selectedConversation?.profilePicture;
     const fallbackAvatarName = fromMe ? authUser.fullName || authUser.username : selectedConversation?.fullName || selectedConversation?.username;
-    const avatarSrc = profilePicture || getDicebearAvatarSvg(fallbackAvatarName);
+    const avatarSrc = useMemo(() => 
+        profilePicture || getDicebearAvatarSvg(fallbackAvatarName, 40),
+        [profilePicture, fallbackAvatarName]
+    );
     const bubbleBgColor = fromMe ? 'bg-blue-500' : '';
 
     const shakeClass = message.shouldShake ? 'shake' : '';
