@@ -25,8 +25,12 @@ const useLogin = () => {
         if(data.error) {
             throw new Error(data.error);
         }
-        localStorage.setItem("ChatSphere-user", JSON.stringify(data));
-        setAuthUser(data);
+        const authUser = {
+            ...data,
+            profilePicture: data.profilePicture || `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(data.fullName || data.username || "User")}&size=64`,
+        };
+        localStorage.setItem("ChatSphere-user", JSON.stringify(authUser));
+        setAuthUser(authUser);
     } catch (error) {
         toast.error(error.message);
     } finally {
