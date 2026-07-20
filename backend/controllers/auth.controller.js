@@ -20,8 +20,7 @@ export const signup = async (req, res) => {
       const hashedPassword = await bcrypt.hash(password, salt);
 
       const nameSource = (fullName || username || "User").trim();
-      const firstInitial = nameSource.charAt(0).toUpperCase();
-      const profilePicture = `https://ui-avatars.com/api/?name=${encodeURIComponent(firstInitial)}&background=0f766e&color=fff`;
+      const profilePicture = `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(nameSource)}`;
 
       const newUser = new User({
         fullName,

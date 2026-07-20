@@ -4,8 +4,7 @@ import useConversation from "../../zustand/useConversation";
 
 const getAvatarUrl = (name) => {
     const source = (name || "User").trim();
-    const initial = source.charAt(0).toUpperCase();
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(initial)}&background=0f766e&color=fff`;
+    return `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(source)}`;
 };
 
 const Message = ({message}) => {
