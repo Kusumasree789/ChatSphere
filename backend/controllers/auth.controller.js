@@ -1,8 +1,6 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import generateTokenAndSetCookie from "../utils/generateToken.js";
-import generateAvatar from "../utils/generateAvatar.js";
-
 export const signup = async (req, res) => {
     try {
       const { fullName, username, password, confirmPassword, gender}= req.body;  
@@ -20,7 +18,10 @@ export const signup = async (req, res) => {
       // HASH PASSWORD HERE
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
-      const profilePicture = generateAvatar(fullName || username, gender);
+
+      const nameSource = (fullName || username || "User").trim();
+      const firstInitial = nameSource.charAt(0).toUpperCase();
+      const profilePicture = `https://ui-avatars.com/api/?name=${encodeURIComponent(firstInitial)}&background=0f766e&color=fff`;
 
       const newUser = new User({
         fullName,

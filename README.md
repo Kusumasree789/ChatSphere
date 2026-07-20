@@ -78,12 +78,22 @@ ChatSphere/
 - `GET /api/messages/:id` - Get messages
 - `POST /api/messages/send/:id` - Send message
 
+## 🔐 Environment Variables
+```env
+PORT=5000
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>.mongodb.net/<db>
+JWT_SECRET=your_jwt_secret_key
+```
+
 ## 🤝 Contributing
 1. Fork the repo
 2. Create a feature branch (`git checkout -b feature/YourFeature`)
 3. Commit changes (`git commit -m 'Add feature'`)
 4. Push to branch (`git push origin feature/YourFeature`)
 5. Open a Pull Request
+
+## 📝 License
+ISC License
 
 ---
 Built with ❤️ | [Live App](https://chatsphere-jgjo.onrender.com/)

@@ -1,12 +1,19 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
 
+const getAvatarUrl = (name) => {
+    const source = (name || "User").trim();
+    const initial = source.charAt(0).toUpperCase();
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(initial)}&background=0f766e&color=fff`;
+};
+
 const Conversation = ({conversation,lastIdx,emoji}) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
 
     const isSelected = selectedConversation?._id === conversation._id;
     const {onlineUsers} = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
+    const avatarSrc = conversation.profilePicture || getAvatarUrl(conversation.fullName || conversation.username);
 
     return (
         <>
@@ -18,12 +25,9 @@ const Conversation = ({conversation,lastIdx,emoji}) => {
                 <div className={`avatar ${isOnline ? "online" : ""}`}>
                     <div className='w-12 rounded-full'>
                         <img
-                            src={conversation.profilePicture || "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff"}
+                            src={avatarSrc}
                             alt='user avatar'
-                            onError={(e) => {
-                                e.target.onerror = null;
-                                e.target.src = "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff";
-                            }}
+                            onError={(e) => { e.target.onerror = null; e.target.src = getAvatarUrl(conversation.fullName || conversation.username); }}
                         />
                     </div>
                 </div>
