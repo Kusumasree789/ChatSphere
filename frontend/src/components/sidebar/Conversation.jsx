@@ -18,8 +18,12 @@ const Conversation = ({conversation,lastIdx,emoji}) => {
                 <div className={`avatar ${isOnline ? "online" : ""}`}>
                     <div className='w-12 rounded-full'>
                         <img
-                            src={conversation.profilePicture}
+                            src={conversation.profilePicture || "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff"}
                             alt='user avatar'
+                            onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff";
+                            }}
                         />
                     </div>
                 </div>

@@ -17,7 +17,14 @@ const Message = ({message}) => {
         <div className={`chat ${chatClassName}`}>
             <div className='chat-image avatar'>
                 <div className='w-10 rounded-full'>
-                    <img alt='Tailwind CSS chat bubble component' src={profilePicture} />
+                    <img
+                        alt='user avatar'
+                        src={profilePicture || "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff"}
+                        onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = "https://ui-avatars.com/api/?name=User&background=0f766e&color=fff";
+                        }}
+                    />
                 </div>
             </div>
             <div className={`chat-bubble text-white ${bubbleBgColor} ${shakeClass}`}>{message.message}</div>
