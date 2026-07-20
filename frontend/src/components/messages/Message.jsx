@@ -1,11 +1,7 @@
 import { useAuthContext } from "../../context/AuthContext";
 import { extractTime } from "../../utils/extractTime";
 import useConversation from "../../zustand/useConversation";
-
-const getAvatarUrl = (name) => {
-    const source = (name || "User").trim();
-    return `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(source)}`;
-};
+import { getDicebearAvatarSvg } from "../../utils/avatar";
 
 const Message = ({message}) => {
     const {authUser} = useAuthContext();
@@ -15,7 +11,7 @@ const Message = ({message}) => {
     const chatClassName = fromMe ? 'chat-end' : 'chat-start';
     const profilePicture = fromMe ? authUser.profilePicture : selectedConversation?.profilePicture;
     const fallbackAvatarName = fromMe ? authUser.fullName || authUser.username : selectedConversation?.fullName || selectedConversation?.username;
-    const avatarSrc = profilePicture || getAvatarUrl(fallbackAvatarName);
+    const avatarSrc = profilePicture || getDicebearAvatarSvg(fallbackAvatarName);
     const bubbleBgColor = fromMe ? 'bg-blue-500' : '';
 
     const shakeClass = message.shouldShake ? 'shake' : '';
@@ -25,9 +21,9 @@ const Message = ({message}) => {
             <div className='chat-image avatar'>
                 <div className='w-10 rounded-full'>
                     <img
-                        alt='Tailwind CSS chat bubble component'
+                        alt='user avatar'
                         src={avatarSrc}
-                        onError={(e) => { e.target.onerror = null; e.target.src = getAvatarUrl(fallbackAvatarName); }}
+                        onError={(e) => { e.target.onerror = null; e.target.src = getDicebearAvatarSvg(fallbackAvatarName); }}
                     />
                 </div>
             </div>

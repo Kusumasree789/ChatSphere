@@ -1,10 +1,6 @@
 import { useSocketContext } from "../../context/SocketContext";
 import useConversation from "../../zustand/useConversation";
-
-const getAvatarUrl = (name) => {
-    const source = (name || "User").trim();
-    return `https://api.dicebear.com/9.x/adventurer/svg?seed=${encodeURIComponent(source)}`;
-};
+import { getDicebearAvatarSvg } from "../../utils/avatar";
 
 const Conversation = ({conversation,lastIdx,emoji}) => {
     const {selectedConversation, setSelectedConversation} = useConversation();
@@ -12,7 +8,7 @@ const Conversation = ({conversation,lastIdx,emoji}) => {
     const isSelected = selectedConversation?._id === conversation._id;
     const {onlineUsers} = useSocketContext();
     const isOnline = onlineUsers.includes(conversation._id);
-    const avatarSrc = conversation.profilePicture || getAvatarUrl(conversation.fullName || conversation.username);
+    const avatarSrc = conversation.profilePicture || getDicebearAvatarSvg(conversation.fullName || conversation.username);
 
     return (
         <>
@@ -26,7 +22,7 @@ const Conversation = ({conversation,lastIdx,emoji}) => {
                         <img
                             src={avatarSrc}
                             alt='user avatar'
-                            onError={(e) => { e.target.onerror = null; e.target.src = getAvatarUrl(conversation.fullName || conversation.username); }}
+                            onError={(e) => { e.target.onerror = null; e.target.src = getDicebearAvatarSvg(conversation.fullName || conversation.username); }}
                         />
                     </div>
                 </div>
